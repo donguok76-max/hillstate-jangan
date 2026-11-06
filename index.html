@@ -97,7 +97,9 @@ nav a:hover{opacity:1;color:var(--gold)}
 .opt li::before{content:"· ";color:var(--gold)}
 
 /* units */
-.units{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.units{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+@media (max-width:980px){.units{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.units{grid-template-columns:1fr}}
 .unit{position:relative;background:var(--bg);border:1px solid var(--line);padding:26px 22px;display:grid;gap:10px;align-content:start}
 .unit .tag{justify-self:start;font-size:12px;font-weight:700;padding:4px 10px;border-radius:2px;letter-spacing:.04em}
 .unit h3{font-family:var(--serif);font-size:30px;color:var(--navy);font-variant-numeric:tabular-nums}
@@ -294,7 +296,7 @@ footer b{color:#fff;font-family:var(--serif);font-size:16px}
         </div>
         <a class="btn kakao" href="https://pf.kakao.com/_CVwxhX/chat" target="_blank" rel="noopener">카톡으로 방문 예약</a>
       </dl>
-      <iframe class="map" title="힐스테이트 장안 센트럴 위치" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EB%8F%99%EB%8C%80%EB%AC%B8%EA%B5%AC%20%EC%9E%A5%ED%95%9C%EB%A1%9C%20110&amp;z=16&amp;output=embed"></iframe>
+      <iframe class="map" title="힐스테이트 장안 센트럴 위치" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=%ED%9E%90%EC%8A%A4%ED%85%8C%EC%9D%B4%ED%8A%B8%20%EC%9E%A5%EC%95%88%20%EC%84%BC%ED%8A%B8%EB%9F%B4&amp;z=16&amp;output=embed"></iframe>
     </div>
   </div>
 </section>
