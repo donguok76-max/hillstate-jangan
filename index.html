@@ -134,6 +134,21 @@ nav a:hover{opacity:1;color:var(--gold)}
 .faq details[open] summary::after{content:"−"}
 .faq p{margin:10px 0 0;color:var(--muted)}
 
+/* lead form */
+.lead{max-width:560px;margin:0 auto;background:#fff;border:1px solid var(--line);border-top:3px solid var(--gold);padding:28px 22px}
+.lead h3{margin:0 0 6px;font-size:22px;color:var(--navy)}
+.lead .sub{margin:0 0 18px;color:var(--muted);font-size:14px}
+.lead label{display:block;font-size:14px;font-weight:500;margin:14px 0 6px}
+.lead input[type=text],.lead input[type=tel],.lead select,.lead textarea{width:100%;box-sizing:border-box;font:inherit;font-size:16px;padding:12px;border:1px solid #C9CED8;border-radius:8px;background:#fff;color:var(--ink)}
+.lead textarea{min-height:76px;resize:vertical}
+.lead .agree{display:flex;gap:8px;align-items:flex-start;font-weight:400;font-size:13px;color:var(--muted);margin-top:16px}
+.lead .agree input{margin-top:3px;width:18px;height:18px;flex:none}
+.lead .agree a{color:var(--navy)}
+.lead button{margin-top:18px;width:100%;height:54px;border:0;border-radius:10px;background:var(--navy);color:#fff;font-size:18px;font-weight:700;cursor:pointer}
+.lead button[disabled]{opacity:.6}
+.lead .msg{margin:12px 0 0;font-size:14px;min-height:20px}
+.lead .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
 /* contact */
 .contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:28px}
 @media (max-width:800px){.contact{grid-template-columns:1fr}}
@@ -182,7 +197,7 @@ else if(h.indexOf('pf.kakao.com')>-1){fbq('track','Contact',{content_name:'카�
   <div class="wrap hd">
     <a class="brand" href="#top">힐스테이트 장안 센트럴<small>HILLSTATE JANGAN CENTRAL</small></a>
     <nav aria-label="주요 메뉴">
-      <a href="#overview">단지개요</a><a href="#location">입지</a><a href="#premium">프리미엄</a><a href="#unit">세대정보</a><a href="#gallery">갤러리</a><a href="#contact">오시는길</a>
+      <a href="#overview">단지개요</a><a href="#location">입지</a><a href="#premium">프리미엄</a><a href="#unit">세대정보</a><a href="#gallery">갤러리</a><a href="#lead">상담신청</a><a href="#contact">오시는길</a>
     </nav>
     <a class="hd-tel" href="tel:1670-1359">☎ 1670-1359</a>
   </div>
@@ -308,6 +323,30 @@ else if(h.indexOf('pf.kakao.com')>-1){fbq('track','Contact',{content_name:'카�
   </div>
 </section>
 
+<section class="sec" id="lead">
+  <div class="wrap">
+    <form class="lead" id="leadForm" novalidate>
+      <span class="eyebrow">Reservation</span>
+      <h3>관심고객 등록 · 방문 예약</h3>
+      <p class="sub">남겨주시면 담당자가 빠르게 연락드려 혜택과 잔여 호실을 안내해 드립니다.</p>
+      <label for="lf-name">성함 *</label>
+      <input id="lf-name" name="name" type="text" maxlength="20" autocomplete="name" required>
+      <label for="lf-phone">휴대폰 번호 *</label>
+      <input id="lf-phone" name="phone" type="tel" inputmode="numeric" maxlength="13" placeholder="010-0000-0000" autocomplete="tel" required>
+      <label for="lf-type">관심 평형</label>
+      <select id="lf-type" name="type"><option value="78㎡">78㎡ (계약해지분)</option><option value="상관없음">상관없음 · 상담 후 결정</option></select>
+      <label for="lf-when">통화 편한 시간</label>
+      <select id="lf-when" name="when"><option>언제든 가능</option><option>오전 (9~12시)</option><option>오후 (12~18시)</option><option>저녁 (18시 이후)</option></select>
+      <label for="lf-memo">문의 내용 (선택)</label>
+      <textarea id="lf-memo" name="memo" maxlength="200" placeholder="예) 주말 방문 희망, 대출 상담 원해요"></textarea>
+      <div class="hp" aria-hidden="true"><label>웹사이트<input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <label class="agree"><input type="checkbox" id="lf-agree" required><span>[필수] 분양 상담을 위한 개인정보(성함, 휴대폰 번호, 문의 내용) 수집·이용에 동의합니다. 상담 종료 후 6개월간 보관 후 파기합니다. <a href="/privacy/" target="_blank">자세히</a></span></label>
+      <button type="submit" id="lf-btn">상담 신청하기</button>
+      <p class="msg" id="lf-msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
 <section class="sec" id="contact">
   <div class="wrap">
     <div class="sec-head"><span class="eyebrow">Contact</span><h2>오시는 길</h2></div>
@@ -354,6 +393,29 @@ else if(h.indexOf('pf.kakao.com')>-1){fbq('track','Contact',{content_name:'카�
   document.getElementById('lbx').addEventListener('click',close);
   lb.addEventListener('click',function(e){if(e.target===lb)close();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+})();
+</script>
+<script>
+(function(){
+var ENDPOINT='__ENDPOINT__';
+var f=document.getElementById('leadForm');if(!f)return;
+var ph=document.getElementById('lf-phone'),msg=document.getElementById('lf-msg'),btn=document.getElementById('lf-btn');
+ph.addEventListener('input',function(){var d=ph.value.replace(/\D/g,'').slice(0,11);ph.value=d.length>7?d.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3'):d.length>3?d.slice(0,3)+'-'+d.slice(3):d;});
+function say(s,ok){msg.textContent=s;msg.style.color=ok?'#1C7C3C':'#C8372D';}
+f.addEventListener('submit',function(ev){ev.preventDefault();
+  var name=f.name.value.trim(),phone=ph.value.replace(/\D/g,'');
+  if(!name){say('성함을 입력해 주세요.');f.name.focus();return;}
+  if(!/^01[016789]\d{7,8}$/.test(phone)){say('휴대폰 번호를 정확히 입력해 주세요.');ph.focus();return;}
+  if(!document.getElementById('lf-agree').checked){say('개인정보 수집·이용에 동의해 주세요.');return;}
+  var q=new URLSearchParams(location.search);var src=[q.get('utm_source'),q.get('utm_campaign')].filter(Boolean).join('/')||(document.referrer?new URL(document.referrer).hostname:'홈페이지 직접');
+  var body=new URLSearchParams({name:name,phone:phone,type:f.type.value,when:f.when.value,memo:f.memo.value.trim(),website:f.website.value,agree:'Y',source:src});
+  btn.disabled=true;btn.textContent='접수 중...';
+  fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:body}).then(function(){
+    say('접수되었습니다. 곧 연락드릴게요. 급하시면 1670-1359로 전화 주세요.',true);
+    f.reset();btn.textContent='접수 완료';
+    if(window.fbq)fbq('track','Lead',{content_name:'홈페이지 관심고객'});
+  }).catch(function(){btn.disabled=false;btn.textContent='상담 신청하기';say('전송이 안 됐어요. 잠시 후 다시 시도하시거나 1670-1359로 전화 주세요.');});
+});
 })();
 </script>
 </body>
